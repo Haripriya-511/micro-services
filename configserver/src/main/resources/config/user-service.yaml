@@ -1,0 +1,41 @@
+spring:
+  application:
+    name: user-service
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+  #  datasource:
+  #    url: jdbc:postgresql://localhost:5432/userdb
+  #    username: priya
+  #    password: 1234
+  data:
+    mongodb:
+      uri: ${MONGO_URI}
+      database: userdb
+
+#  h2:
+#    console:
+#      enabled: true
+#  datasource:
+#    url: jdbc:h2:mem:testdb
+#    driver: org.h2.Driver
+#    username: sa
+#    password:
+#  jpa:
+#    show-sql: true
+#    hibernate:
+#      ddl-auto: update
+#    database: POSTGRESQL
+#    database-platform: org.hibernate.dialect.PostgreSQLDialect
+server:
+  port: 8082
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+

@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: configclient
+  config:
+    import: optional:configserver:http://localhost:8888
+  profiles:
+    active: dev
+
+build:
+  id: ${ID}
+  version: ${VERSION}
+  name: ${NAME}
+  type: PROD
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+ 
