@@ -2,6 +2,7 @@ package com.ecommerce.user.service;
 
 import com.ecommerce.user.dto.AddressDto;
 import com.ecommerce.user.dto.UserRequest;
+import com.ecommerce.user.dto.UserResponse;
 import com.ecommerce.user.models.Address;
 import com.ecommerce.user.models.User;
 import com.ecommerce.user.repository.UserRepository;
@@ -18,12 +19,12 @@ public class UserService {
     private final UserRepository userRepository;
    // private List<User> userList=new ArrayList<>();
   //  private  Long cnt=1L;
-    public List<AddressDto.UserResponse> fetchAllUsers(){
-        return userRepository.findAll()
-                .stream().map(this::mapToUserResponse)
-                .collect(Collectors.toList());
-    }
-    public Optional<AddressDto.UserResponse> fetchUser(String id){
+   public List<UserResponse> fetchAllUsers(){
+       return userRepository.findAll().stream()
+               .map(this::mapToUserResponse)
+               .collect(Collectors.toList());
+   }
+    public Optional<UserResponse> fetchUser(String id){
         return userRepository.findById(String.valueOf(id))
                 .map(this::mapToUserResponse);
 
@@ -37,15 +38,14 @@ public class UserService {
     public boolean updateUser(String id,UserRequest updatedUser){
         return userRepository.findById(id)
                 .map(existingUser->{
-                    //User userTobeInserted=new User();
                     updateUserFromRequest(existingUser,updatedUser);
                    userRepository.save(existingUser);
                     return true;
                 }).orElse(false);
 
     }
-    private AddressDto.UserResponse mapToUserResponse(User user){
-        AddressDto.UserResponse userResponse=new AddressDto.UserResponse();
+    private UserResponse mapToUserResponse(User user){
+        UserResponse userResponse=new UserResponse();
         userResponse.setId(String.valueOf(user.getId()));
         userResponse.setFirstName(user.getFirstName());
         userResponse.setLastName(user.getLastName());
@@ -54,7 +54,6 @@ public class UserService {
         userResponse.setRole(user.getRole());
         if(user.getAddress()!=null){
             AddressDto addressDto=new AddressDto();
-
             addressDto.setCity(user.getAddress().getCity());
             addressDto.setZipcode(user.getAddress().getZipcode());
             addressDto.setCountry(user.getAddress().getCountry());

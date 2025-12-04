@@ -2,6 +2,7 @@ package com.ecommerce.user.controller;
 
 import com.ecommerce.user.dto.AddressDto;
 import com.ecommerce.user.dto.UserRequest;
+import com.ecommerce.user.dto.UserResponse;
 import com.ecommerce.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -17,12 +18,12 @@ public class UserController {
     private final UserService userService;
     @GetMapping
     //@RequestMapping(value = "/api/users",method = RequestMethod.GET)
-    public ResponseEntity<List<AddressDto.UserResponse>> getAllUsers(){
+    public ResponseEntity<List<UserResponse>> getAllUsers(){
      //   return ResponseEntity.ok(userService.fetchAllUsers());
         return new ResponseEntity<>(userService.fetchAllUsers(), HttpStatus.OK);
     }
     @GetMapping("/{id}")
-    public ResponseEntity<AddressDto.UserResponse> getUserById(@PathVariable String id){
+    public ResponseEntity<UserResponse> getUserById(@PathVariable String id){
         return userService.fetchUser(id)
                 .map(ResponseEntity::ok)
                 .orElseGet(()->ResponseEntity.notFound().build());

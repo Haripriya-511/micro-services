@@ -1,6 +1,5 @@
-package com.ecommerce.user.dto;
+package com.ecommerce.order.dto;
 
-import com.ecommerce.user.models.UserRole;
 import lombok.Data;
 
 @Data
@@ -11,4 +10,6 @@ public class AddressDto {
     private String state;
     private String country;
     private String zipcode;
+
+
 }

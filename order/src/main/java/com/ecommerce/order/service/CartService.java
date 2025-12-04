@@ -1,6 +1,10 @@
 package com.ecommerce.order.service;
 
+import com.ecommerce.order.clients.ProductServiceClient;
+import com.ecommerce.order.clients.UserServiceClient;
 import com.ecommerce.order.dto.CartItemRequest;
+import com.ecommerce.order.dto.ProductResponse;
+import com.ecommerce.order.dto.UserResponse;
 import com.ecommerce.order.models.CartItem;
 
 import com.ecommerce.order.repository.CartItemRepository;
@@ -17,17 +21,18 @@ import java.util.Optional;
 @Transactional
 public class CartService {
     private final CartItemRepository cartItemRepository;
+    private final ProductServiceClient productServiceClient;
+    private final UserServiceClient userServiceClient;
 //    private final ProductRepository productRepository;
 //    private final UserRepository userRepository;
     public Boolean addToCart(String userId, CartItemRequest request) {
         // Look for product
-//        Optional<Product> productOpt=productRepository.findById(request.getProductId());
-//        if(productOpt.isEmpty())
-//            return false;
-//
-//        Product product=productOpt.get();
-//        if(product.getStockQuantity()< request.getQuantity())
-//            return false;
+        com.ecommerce.order.dto.ProductResponse productResponse =productServiceClient.getProductDetails(request.getProductId());
+        if(productResponse==null || productResponse.getStockQuantity()< request.getQuantity())
+            return false;
+        UserResponse userDetails = userServiceClient.getUserDetails(userId);
+        if (userDetails==null) return false;
+
 //
 //        Optional<User> userOpt=userRepository.findById(Long.valueOf(userId));
 //        if(userOpt.isEmpty())
